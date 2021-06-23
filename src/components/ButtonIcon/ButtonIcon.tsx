@@ -7,7 +7,7 @@ import discordImg from "../../assets/discord.png"
 type Props = RectButtonProps & {
   title: string
 }
-export default function ButtonIcon({title, ...rest}: Props) {
+export function ButtonIcon({title, ...rest}: Props) {
   return (
     <RectButton 
     style={styles.container}

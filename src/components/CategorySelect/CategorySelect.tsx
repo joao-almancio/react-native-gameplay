@@ -6,10 +6,11 @@ import { Category } from '../Category/Category';
 
 type Props = {
   categorySelected: string,
-  setCategory: (categoryId: string) => void
+  setCategory: (categoryId: string) => void,
+  hasCheckbox?: boolean
 }
 
-export default function CategorySelect({categorySelected, setCategory}: Props) {
+export function CategorySelect({categorySelected, setCategory, hasCheckbox = false}: Props) {
   return (
     <ScrollView
       horizontal
@@ -26,6 +27,7 @@ export default function CategorySelect({categorySelected, setCategory}: Props) {
               icon={category.icon}
               checked={category.id === categorySelected}
               onPress={()=> setCategory(category.id)}
+              hasCheckBox={hasCheckbox}
             />
           )
         })

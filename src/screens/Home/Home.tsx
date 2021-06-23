@@ -4,19 +4,29 @@ import { View, FlatList, Text } from "react-native";
 import { styles } from "./Home.style";
 
 import { Profile } from "../../components/Profile/Profile";
-import ButtonAdd from "../../components/ButtonAdd/ButtonAdd";
-import CategorySelect from "../../components/CategorySelect/CategorySelect";
+import { ButtonAdd } from "../../components/ButtonAdd/ButtonAdd";
+import { CategorySelect } from "../../components/CategorySelect/CategorySelect";
 import { ListHeader } from "../../components/ListHeader/ListHeader";
 import { ListDivider } from "../../components/ListDivider/ListDivider";
+import { Background } from '../../components/Background/Background';
 
 
 import { Appointment } from "../../components/Appointment/Appointment";
+import { useNavigation } from "@react-navigation/native";
 
 export function Home() {
   const [category, setCategory] = useState('');
 
   const handleCategorySelect = (categoryId: string) => {
     categoryId === category ? setCategory('') : setCategory(categoryId);
+  }
+
+  const navigation = useNavigation();
+  const handleAppointmentDetails = () => {
+    navigation.navigate('AppointmentDetails')
+  }
+  const handleAppointmentCreate = () => {
+    navigation.navigate('AppointmentCreate')
   }
 
   const appointments = [
@@ -37,34 +47,42 @@ export function Home() {
   ]
 
   return (
-    <View>
-      <View style={styles.header}>
-        <Profile />
-        <ButtonAdd />
-      </View>
+    <Background>
 
       <View>
-        <CategorySelect
-          categorySelected={category}
-          setCategory={handleCategorySelect}
-        />
+        <View style={styles.header}>
+          <Profile />
+          <ButtonAdd onPress={handleAppointmentCreate}/>
+        </View>
 
-        <View style={styles.content}>
-          <ListHeader
-            title="Partidas agendadas"
-            subtitle="Total 6"
+        <View>
+          <CategorySelect
+            categorySelected={category}
+            setCategory={handleCategorySelect}
           />
-          
-          <FlatList
-            data={appointments}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => (<Appointment data={item} />)}
-            style={styles.matches}
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <ListDivider />}
-          />
+
+          <View style={styles.content}>
+            <ListHeader
+              title="Partidas agendadas"
+              subtitle="Total 6"
+            />
+
+            <FlatList
+              data={appointments}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+              <Appointment 
+              data={item} 
+              onPress={handleAppointmentDetails}
+              />
+              )}
+              style={styles.matches}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={() => <ListDivider />}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </Background>
   )
 }

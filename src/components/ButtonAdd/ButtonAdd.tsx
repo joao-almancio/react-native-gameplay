@@ -5,7 +5,7 @@ import { theme } from '../../global/styles/theme';
 import { styles } from './ButtonAdd.style';
 
 
-export default function ButtonAdd({...rest}: RectButtonProps) {
+export function ButtonAdd({...rest}: RectButtonProps) {
   return (
     <RectButton 
     style={styles.container}
