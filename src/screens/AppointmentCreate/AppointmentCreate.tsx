@@ -30,9 +30,17 @@ export function AppointmentCreate({ children }: Props) {
     setOpenGuildsModal(true)
   }
 
+  const handleCloseGuilds = () => {
+    setOpenGuildsModal(false)
+  }
+
   const handleGuildSelect = (guildSelect: GuildProps) => {
     setGuild(guildSelect)
     setOpenGuildsModal(false)
+  }
+
+  const handleCategorySelect = (categoryId: string) => {
+    setCategory(categoryId)
   }
 
   return (
@@ -40,9 +48,9 @@ export function AppointmentCreate({ children }: Props) {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView>
+      <Background>
+        <ScrollView>
 
-        <Background>
           <Header
             title={'Agendar partida'}
           />
@@ -56,7 +64,7 @@ export function AppointmentCreate({ children }: Props) {
 
           <CategorySelect
             hasCheckbox
-            setCategory={setCategory}
+            setCategory={handleCategorySelect}
             categorySelected={category}
           />
 
@@ -64,9 +72,9 @@ export function AppointmentCreate({ children }: Props) {
             <RectButton onPress={handleOpenGuilds}>
               <View style={styles.select}>
                 {
-                  guild.icon 
-                  ? <GuildIcon /> 
-                  : <View style={styles.image} />
+                  guild.icon
+                    ? <GuildIcon />
+                    : <View style={styles.image} />
                 }
 
                 <View style={styles.selectBody}>
@@ -85,7 +93,7 @@ export function AppointmentCreate({ children }: Props) {
 
             <View style={styles.field}>
               <View>
-                <Text style={styles.label}>
+                <Text style={[styles.label, { marginBottom: 12, textAlign: 'center' }]}>
                   Dia e mês
                 </Text>
 
@@ -100,7 +108,7 @@ export function AppointmentCreate({ children }: Props) {
               </View>
 
               <View>
-                <Text style={styles.label}>
+                <Text style={[styles.label, { marginBottom: 12, textAlign: 'center' }]}>
                   Hora e minito
                 </Text>
 
@@ -140,11 +148,13 @@ export function AppointmentCreate({ children }: Props) {
 
 
           </View>
+        </ScrollView>
+      </Background>
 
-        </Background>
-      </ScrollView>
-
-      <ModalView visible={openGuildsModal}>
+      <ModalView
+        visible={openGuildsModal}
+        closeModal={handleCloseGuilds}
+      >
         <Guilds handleGuildSelect={handleGuildSelect} />
       </ModalView>
     </KeyboardAvoidingView>
