@@ -20,6 +20,8 @@ export const theme = {
     on: "#32BD50",
 
     background: '#0d133d',
+
+    discord: '#7289da'
   },
 
   fonts: {
